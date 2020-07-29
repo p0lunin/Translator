@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Tranlator.Infrastructure;
 using Tranlator.Repositories;
 using Tranlator.Services;
+using Tranlator.Smtp;
 
 namespace Tranlator
 {
@@ -39,7 +40,8 @@ namespace Tranlator
                 .AddTransient<IUserRepository, EfUserRepository>()
                 .AddTransient<IAuthLinksRepository, EfAuthLinksRepository>()
                 
-                .AddSingleton<ISmtpService, SmtpService>()
+                .AddSingleton<ISmtpClient, SysSmtpClient>()
+                .AddTransient<ISmtpService, SmtpService>()
                 .AddTransient<IUserService, UserService>();
 
             // In production, the React files will be served from this directory
