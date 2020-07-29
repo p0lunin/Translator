@@ -71,5 +71,26 @@ namespace TranslatorTests
             var expected = new UserAuthorizedResult(FakeMail, true);
             Assert.AreEqual(expected, actual);
         }
+        
+        [Test]
+        public async Task TestAuthOldUser()
+        {
+            const string Username = "Dordoa";
+            await _userRepository.CreateUser(Username, FakeMail);
+            var userService = new UserService(
+                _randomGeneratorService, 
+                _userRepository,
+                _authLinksRepository,
+                new MokeSmtpService((email, message) =>
+                {
+                    
+                }),
+                _options
+            );
+            await userService.SendAuthLink(FakeMail);
+            var actual = await userService.AuthUser(RandomValue);
+            var expected = new UserAuthorizedResult(Username);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
