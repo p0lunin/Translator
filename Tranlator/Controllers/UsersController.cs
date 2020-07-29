@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Tranlator.Filters;
 using Tranlator.Services;
+using Tranlator.ViewModels;
 using Tranlator.ViewModels.Errors;
 
 namespace Tranlator.Controllers
@@ -22,12 +23,23 @@ namespace Tranlator.Controllers
         }
         
         [HttpGet]
+        [Route("send-auth-link")]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(ApiError), 401)]
         public async Task<IActionResult> SendAuthLink([FromQuery] string email)
         {
             await _userService.SendAuthLink(email);
             return new JsonResult("ok");
+        }
+        
+        [HttpGet]
+        [Route("auth")]
+        [ProducesResponseType(typeof(UserAuthorizedResult), 200)]
+        [ProducesResponseType(typeof(ApiError), 401)]
+        public async Task<IActionResult> Auth([FromQuery] string link)
+        {
+            var res = await _userService.AuthUser(link);
+            return new JsonResult(res);
         }
     }
 }
