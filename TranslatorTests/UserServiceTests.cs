@@ -9,7 +9,7 @@ using TranslatorTests.Infrastructure;
 
 namespace TranslatorTests
 {
-    public class Tests
+    public class UserServiceTests
     {
         [SetUp]
         public void Setup()
