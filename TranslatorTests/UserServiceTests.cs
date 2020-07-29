@@ -11,9 +11,17 @@ namespace TranslatorTests
 {
     public class UserServiceTests
     {
+        private MemoryUserRepository _userRepository;
+        private MemoryAuthLinksRepository _authLinksRepository;
+        private OptionsWrapper<Settings> _options;
+        private OneValueRandomGeneratorService<string> _randomGeneratorService;
         [SetUp]
         public void Setup()
         {
+            _userRepository = new MemoryUserRepository();
+            _authLinksRepository = new MemoryAuthLinksRepository();
+            _randomGeneratorService = new OneValueRandomGeneratorService<string>("123");
+            _options = new OptionsWrapper<Settings>(new Settings("host"));
         }
 
         [Test]
@@ -21,19 +29,16 @@ namespace TranslatorTests
         {
             Task.Run(async () =>
             {
-                var userRepository = new MemoryUserRepository();
-                var authLinksRepository = new MemoryAuthLinksRepository();
-                
                 var userService = new UserService(
-                    new OneValueRandomGeneratorService<string>("123"), 
-                    userRepository,
-                    authLinksRepository,
+                    _randomGeneratorService, 
+                    _userRepository,
+                    _authLinksRepository,
                     new MokeSmtpService((email, message) =>
                     {
                         Assert.AreEqual(email, "fake@mail.com");
                         Assert.AreEqual(message, "host/users/auth?key=123");
                     }),
-                    new OptionsWrapper<Settings>(new Settings("host"))
+                    _options
                     );
                 await userService.SendAuthLink("fake@mail.com");
                 var expected = new AuthLink
@@ -41,7 +46,7 @@ namespace TranslatorTests
                     Email = "fake@mail.com",
                     Link = "123",
                 };
-                var actual = authLinksRepository._links.First();
+                var actual = _authLinksRepository._links.First();
                 Assert.AreEqual(expected.Email, actual.Email);
                 Assert.AreEqual(expected.Link, actual.Link);
             });
