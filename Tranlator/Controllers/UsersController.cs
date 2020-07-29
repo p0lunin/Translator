@@ -36,9 +36,9 @@ namespace Tranlator.Controllers
         [Route("auth")]
         [ProducesResponseType(typeof(UserAuthorizedResult), 200)]
         [ProducesResponseType(typeof(ApiError), 401)]
-        public async Task<IActionResult> Auth([FromQuery] string link)
+        public async Task<IActionResult> Auth([FromQuery] string key)
         {
-            var res = await _userService.AuthUser(link);
+            var res = await _userService.AuthUser(key);
             return new JsonResult(res);
         }
     }
