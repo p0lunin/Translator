@@ -52,7 +52,7 @@ namespace Tranlator.Services
             {
                 var user = await _userRepository.CreateUser(linkModel.Email, linkModel.Email);
                 await _userRepository.SaveChanges();
-                return new UserAuthorizedResult(user.Name);
+                return new UserAuthorizedResult(user.Name, isNewUser: true);
             }
         }
     }
