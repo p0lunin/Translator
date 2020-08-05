@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Tranlator.Exceptions;
 using Tranlator.Models;
 
 namespace Tranlator.Repositories
@@ -29,6 +31,14 @@ namespace Tranlator.Repositories
 
         public async Task<List<Project>> GetUserProjects(string username)
         {
+            try
+            {
+                await _ctx.Users.FirstAsync(user => user.Name.Equals(username));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RecordNotFoundException("user");
+            }
             return await _ctx.Projects.Where(proj => proj.Owner.Name.Equals(username)).ToListAsync();
         }
     }
