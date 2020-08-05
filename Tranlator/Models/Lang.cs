@@ -5,6 +5,7 @@ namespace Tranlator.Models
 {
     public class Lang
     {
+        public int Id { get; set; }
         [Required]
         public Project Project { get; set; }
         [Required]

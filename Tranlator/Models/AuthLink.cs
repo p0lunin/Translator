@@ -5,6 +5,7 @@ namespace Tranlator.Models
 {
     public class AuthLink
     {
+        public int Id { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]

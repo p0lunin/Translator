@@ -5,6 +5,7 @@ namespace Tranlator.Models
 {
     public class Project
     {
+        public int Id { get; set; }
         [Required]
         public User Owner { get; set; }
         [Required]

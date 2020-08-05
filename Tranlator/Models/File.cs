@@ -5,6 +5,7 @@ namespace Tranlator.Models
 {
     public class File
     {
+        public int Id { get; set; }
         [Required]
         public Lang Lang { get; set; }
         [Required]
