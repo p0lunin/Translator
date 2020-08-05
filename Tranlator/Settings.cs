@@ -1,4 +1,7 @@
-﻿namespace Tranlator
+﻿using System;
+using Microsoft.Extensions.Configuration;
+
+namespace Tranlator
 {
     public class Settings
     {

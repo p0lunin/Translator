@@ -15,7 +15,7 @@ namespace TranslatorTests
     {
         private MemoryUserRepository _userRepository;
         private MemoryAuthLinksRepository _authLinksRepository;
-        private OptionsWrapper<Settings> _options;
+        private Settings _options;
         private OneValueRandomGeneratorService<string> _randomGeneratorService;
         private const string FakeMail = "fake@gmail.com";
         private const string RandomValue = "123";
@@ -25,7 +25,7 @@ namespace TranslatorTests
             _userRepository = new MemoryUserRepository();
             _authLinksRepository = new MemoryAuthLinksRepository();
             _randomGeneratorService = new OneValueRandomGeneratorService<string>(RandomValue);
-            _options = new OptionsWrapper<Settings>(new Settings("host"));
+            _options = new Settings("host");
         }
 
         [Test]

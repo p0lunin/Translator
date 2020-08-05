@@ -38,11 +38,6 @@
         </Content>
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-        <Content Update="services_settings.json">
-          <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        </Content>
     </ItemGroup>
 
     <ItemGroup>

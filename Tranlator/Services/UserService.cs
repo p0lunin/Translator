@@ -20,14 +20,14 @@ namespace Tranlator.Services
             IUserRepository userRepository, 
             IAuthLinksRepository authLinksRepository, 
             IEmailingService emailingService,
-            IOptions<Settings> options
+            Settings options
             )
         {
             _randomGeneratorService = randomGeneratorService;
             _userRepository = userRepository;
             _authLinksRepository = authLinksRepository;
             _emailingService = emailingService;
-            _host = options.Value.Host;
+            _host = options.Host;
         }
 
         public async Task SendAuthLink(string email)

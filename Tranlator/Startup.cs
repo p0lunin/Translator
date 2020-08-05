@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -34,10 +35,10 @@ namespace Tranlator
             services.RegisterOpenApiGenerator();
 
             services.AddEntityFrameworkSqlite().AddDbContext<Models.TranslatorContext>();
-
+            
+            services.AddSingleton(new Settings(Environment.GetEnvironmentVariable("HOST")));
+            
             services
-                .Configure<Settings>(Configuration)
-                
                 .AddTransient<IUserRepository, EfUserRepository>()
                 .AddTransient<IAuthLinksRepository, EfAuthLinksRepository>()
                 
@@ -76,6 +77,18 @@ namespace Tranlator
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+            });
+            
+            app.UseOpenApi(settings =>
+            {
+                settings.Path = $"{ApiConstant.Prefix}openapi/swagger.json";
+                settings.DocumentName = "openapi";
+            });
+
+            app.UseSwaggerUi3(options =>
+            {
+                options.Path = $"{ApiConstant.Prefix}openapi";
+                options.DocumentPath = $"{ApiConstant.Prefix}openapi/swagger.json";
             });
 
             app.UseSpa(spa =>

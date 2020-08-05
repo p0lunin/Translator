@@ -15,7 +15,7 @@ namespace TranslatorTests
         {
             const string content = "content";
             const string mail = "mail@mail.com";
-            var options = new OptionsWrapper<Settings>(new Settings("host"));
+            var options = new Settings("host");
             var mokeClient = new MokeSmtpClient(message =>
             {
                 Assert.AreEqual(content, message.Body);
