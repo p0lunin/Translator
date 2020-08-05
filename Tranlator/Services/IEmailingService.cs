@@ -2,7 +2,7 @@
 
 namespace Tranlator.Services
 {
-    public interface ISmtpService
+    public interface IEmailingService
     {
         public Task SendMessage(string email, string message);
     }

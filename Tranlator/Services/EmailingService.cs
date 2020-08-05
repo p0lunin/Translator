@@ -5,12 +5,12 @@ using Tranlator.Smtp;
 
 namespace Tranlator.Services
 {
-    public class SmtpService : ISmtpService
+    public class EmailingService : IEmailingService
     {
         private readonly string _host;
         private readonly ISmtpClient _smtpClient;
 
-        public SmtpService(IOptions<Settings> options, ISmtpClient smtpClient)
+        public EmailingService(IOptions<Settings> options, ISmtpClient smtpClient)
         {
             _smtpClient = smtpClient;
             _host = options.Value.Host;

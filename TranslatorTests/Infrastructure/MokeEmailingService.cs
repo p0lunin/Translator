@@ -4,11 +4,11 @@ using Tranlator.Services;
 
 namespace TranslatorTests.Infrastructure
 {
-    class MokeSmtpService : ISmtpService
+    class MokeEmailingService : IEmailingService
     {
         public Action<string, string> OnSendMessage { get; }
 
-        public MokeSmtpService(Action<string, string> onSendMessage)
+        public MokeEmailingService(Action<string, string> onSendMessage)
         {
             OnSendMessage = onSendMessage;
         }

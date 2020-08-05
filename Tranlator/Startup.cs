@@ -41,7 +41,7 @@ namespace Tranlator
                 .AddTransient<IAuthLinksRepository, EfAuthLinksRepository>()
                 
                 .AddSingleton<ISmtpClient, SysSmtpClient>()
-                .AddTransient<ISmtpService, SmtpService>()
+                .AddTransient<IEmailingService, EmailingService>()
                 .AddTransient<IUserService, UserService>();
 
             // In production, the React files will be served from this directory

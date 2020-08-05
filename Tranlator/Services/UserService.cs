@@ -13,20 +13,20 @@ namespace Tranlator.Services
         private readonly IRandomGeneratorService<string> _randomGeneratorService;
         private readonly IUserRepository _userRepository;
         private readonly IAuthLinksRepository _authLinksRepository;
-        private readonly ISmtpService _smtpService;
+        private readonly IEmailingService _emailingService;
 
         public UserService(
             IRandomGeneratorService<string> randomGeneratorService,
             IUserRepository userRepository, 
             IAuthLinksRepository authLinksRepository, 
-            ISmtpService smtpService,
+            IEmailingService emailingService,
             IOptions<Settings> options
             )
         {
             _randomGeneratorService = randomGeneratorService;
             _userRepository = userRepository;
             _authLinksRepository = authLinksRepository;
-            _smtpService = smtpService;
+            _emailingService = emailingService;
             _host = options.Value.Host;
         }
 
@@ -35,7 +35,7 @@ namespace Tranlator.Services
             var link = _randomGeneratorService.Generate();
             await _authLinksRepository.CreateLink(email, link, DateTime.Now.AddDays(1));
             await _authLinksRepository.SaveChanges();
-            await _smtpService.SendMessage(email, $"{_host}/users/auth?key={link}");
+            await _emailingService.SendMessage(email, $"{_host}/users/auth?key={link}");
         }
 
         public async Task<UserAuthorizedResult> AuthUser(string link)

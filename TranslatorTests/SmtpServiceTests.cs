@@ -21,7 +21,7 @@ namespace TranslatorTests
                 Assert.AreEqual(content, message.Body);
                 Assert.AreEqual(new MailAddress("noreply@host"), message.From);
             });
-            var service = new SmtpService(options, mokeClient);
+            var service = new EmailingService(options, mokeClient);
 
             await service.SendMessage(mail, content);
         }

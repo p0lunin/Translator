@@ -35,7 +35,7 @@ namespace TranslatorTests
                 _randomGeneratorService, 
                 _userRepository,
                 _authLinksRepository,
-                new MokeSmtpService((email, message) =>
+                new MokeEmailingService((email, message) =>
                 {
                     Assert.AreEqual(email, FakeMail);
                     Assert.AreEqual(message, $"host/users/auth?key={RandomValue}");
@@ -60,7 +60,7 @@ namespace TranslatorTests
                 _randomGeneratorService, 
                 _userRepository,
                 _authLinksRepository,
-                new MokeSmtpService((email, message) =>
+                new MokeEmailingService((email, message) =>
                 {
                     
                 }),
@@ -81,7 +81,7 @@ namespace TranslatorTests
                 _randomGeneratorService, 
                 _userRepository,
                 _authLinksRepository,
-                new MokeSmtpService((email, message) =>
+                new MokeEmailingService((email, message) =>
                 {
                     
                 }),
