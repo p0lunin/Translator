@@ -41,12 +41,14 @@ namespace Tranlator
             services
                 .AddTransient<IUserRepository, EfUserRepository>()
                 .AddTransient<IAuthLinksRepository, EfAuthLinksRepository>()
+                .AddTransient<IProjectsRepository, EfProjectsRepository>()
                 
                 .AddTransient<IRandomGeneratorService<string>, GuidRandomGeneratorService>()
                 
                 .AddSingleton<ISmtpClient, SysSmtpClient>()
                 .AddTransient<IEmailingService, EmailingService>()
-                .AddTransient<IUserService, UserService>();
+                .AddTransient<IUserService, UserService>()
+                .AddTransient<IProjectsService, ProjectsService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
