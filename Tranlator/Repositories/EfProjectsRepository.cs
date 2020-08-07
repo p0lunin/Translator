@@ -41,5 +41,18 @@ namespace Tranlator.Repositories
             }
             return await _ctx.Projects.Where(proj => proj.Owner.Name.Equals(username)).ToListAsync();
         }
+
+        public async Task UpdateParagraph(int paragraphId, string newContent)
+        {
+            try
+            {
+                var paragraph = await _ctx.Paragraphs.FirstAsync(par => par.Id.Equals(paragraphId));
+                paragraph.Content = newContent;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RecordNotFoundException("user");
+            }
+        }
     }
 }

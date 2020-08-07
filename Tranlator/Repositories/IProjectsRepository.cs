@@ -8,5 +8,6 @@ namespace Tranlator.Repositories
     {
         public Task<Project> CreateProject(User owner, string name);
         public Task<List<Project>> GetUserProjects(string username);
+        public Task UpdateParagraph(int paragraphId, string newContent);
     }
 }
