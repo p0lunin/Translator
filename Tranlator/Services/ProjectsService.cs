@@ -44,6 +44,24 @@ namespace Tranlator.Services
             return (await _projectsRepository.GetFileParagraphs(fileId)).Select(ParagraphToViewModel).ToList();
         }
 
+        public async Task AddFile(int langId, File file)
+        {
+            await _projectsRepository.AddFile(langId, file);
+            await _projectsRepository.SaveChanges();
+        }
+
+        public async Task AddLang(int projectId, Lang lang)
+        {
+            await _projectsRepository.AddLang(projectId, lang);
+            await _projectsRepository.SaveChanges();
+        }
+
+        public async Task AddParagraph(int fileId, Paragraph paragraph)
+        {
+            await _projectsRepository.AddParagraph(fileId, paragraph);
+            await _projectsRepository.SaveChanges();
+        }
+
         public async Task UpdateParagraph(int userId, int paragraphId, string newContent)
         {
             await AssertUserIsAuthorOfParagraph(userId, paragraphId);

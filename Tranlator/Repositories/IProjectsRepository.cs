@@ -13,5 +13,8 @@ namespace Tranlator.Repositories
         public Task<List<Paragraph>> GetFileParagraphs(int fileId);
         public Task UpdateParagraph(int paragraphId, string newContent);
         public Task<User> GetParagraphAuthor(int paragraphId);
+        public Task AddFile(int langId, File file);
+        public Task AddLang(int projectId, Lang lang);
+        public Task AddParagraph(int fileId, Paragraph paragraph);
     }
 }

@@ -12,6 +12,9 @@ namespace Tranlator.Services
         public Task<List<LangInfoViewModel>> ProjectLangs(int projectId);
         public Task<List<FileInfoViewModel>> LangFiles(int langId);
         public Task<List<ParagraphInfoViewModel>> FileParagraphs(int fileId);
+        public Task AddFile(int langId, File file);
+        public Task AddLang(int projectId, Lang lang);
+        public Task AddParagraph(int fileId, Paragraph paragraph);
         public Task UpdateParagraph(int userId, int paragraphId, string newContent);
     }
 }

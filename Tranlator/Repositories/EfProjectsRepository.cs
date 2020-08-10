@@ -77,10 +77,9 @@ namespace Tranlator.Repositories
 
         public async Task<User> GetParagraphAuthor(int paragraphId)
         {
-            Paragraph paragraph;
             try
             {
-                paragraph = await _ctx.Paragraphs.FirstAsync(p => p.Id.Equals(paragraphId));
+                await _ctx.Paragraphs.FirstAsync(p => p.Id.Equals(paragraphId));
             }
             catch (InvalidOperationException)
             {
@@ -96,6 +95,45 @@ namespace Tranlator.Repositories
                     )
                 )
             );
+        }
+
+        public async Task AddFile(int langId, File file)
+        {
+            try
+            {
+                var lang = await _ctx.Langs.FirstAsync(lang => lang.Id.Equals(langId));
+                lang.Files.Add(file);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RecordNotFoundException("lang");
+            }
+        }
+
+        public async Task AddLang(int projectId, Lang lang)
+        {
+            try
+            {
+                var prj = await _ctx.Projects.FirstAsync(prj => prj.Id.Equals(projectId));
+                prj.Langs.Add(lang);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RecordNotFoundException("project");
+            }
+        }
+
+        public async Task AddParagraph(int fileId, Paragraph paragraph)
+        {
+            try
+            {
+                var file = await _ctx.Files.FirstAsync(file => file.Id.Equals(fileId));
+                file.Paragraphs.Add(paragraph);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RecordNotFoundException("file");
+            }
         }
     }
 }
