@@ -29,17 +29,32 @@ namespace Tranlator.Repositories
             return project;
         }
 
-        public async Task<List<Project>> GetUserProjects(string username)
+        public async Task<List<Project>> GetUserProjects(int userId)
         {
             try
             {
-                await _ctx.Users.FirstAsync(user => user.Name.Equals(username));
+                await _ctx.Users.FirstAsync(user => user.Id.Equals(userId));
             }
             catch (InvalidOperationException)
             {
                 throw new RecordNotFoundException("user");
             }
-            return await _ctx.Projects.Where(proj => proj.Owner.Name.Equals(username)).ToListAsync();
+            return await _ctx.Projects.Where(proj => proj.Owner.Id.Equals(userId)).ToListAsync();
+        }
+
+        public async Task<List<Lang>> GetProjectLangs(int projectId)
+        {
+            return await _ctx.Langs.Where(lang => lang.Project.Id.Equals(projectId)).ToListAsync();
+        }
+
+        public async Task<List<File>> GetLangFiles(int langId)
+        {
+            return await _ctx.Files.Where(file => file.Lang.Id.Equals(langId)).ToListAsync();
+        }
+
+        public async Task<List<Paragraph>> GetFileParagraphs(int fileId)
+        {
+            return await _ctx.Paragraphs.Where(paragraph => paragraph.File.Id.Equals(fileId)).ToListAsync();
         }
 
         public async Task UpdateParagraph(int paragraphId, string newContent)
@@ -53,6 +68,29 @@ namespace Tranlator.Repositories
             {
                 throw new RecordNotFoundException("user");
             }
+        }
+
+        public async Task<User> GetParagraphAuthor(int paragraphId)
+        {
+            Paragraph paragraph;
+            try
+            {
+                paragraph = await _ctx.Paragraphs.FirstAsync(p => p.Id.Equals(paragraphId));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RecordNotFoundException("paragraph");
+            }
+
+            return await _ctx.Users.FirstAsync(
+                user => user.Projects.Any(
+                    proj => proj.Langs.Any(
+                        lang => lang.Files.Any(file => file.Paragraphs.Any(
+                            paragraph => paragraph.Id.Equals(paragraphId)
+                            ))
+                    )
+                )
+            );
         }
     }
 }
