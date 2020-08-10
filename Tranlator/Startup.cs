@@ -47,6 +47,8 @@ namespace Tranlator
                 
                 .AddSingleton<ISmtpClient, SysSmtpClient>()
                 .AddTransient<IEmailingService, EmailingService>()
+                .AddTransient<IFileConverterService, FileConverterService>()
+                
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<IProjectsService, ProjectsService>();
 
