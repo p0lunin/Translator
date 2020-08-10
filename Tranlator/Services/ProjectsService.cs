@@ -17,9 +17,9 @@ namespace Tranlator.Services
             _projectsRepository = projectsRepository;
         }
         
-        public async Task<ProjectInfoViewModel> CreateNewProject(User owner, string name)
+        public async Task<ProjectInfoViewModel> CreateNewProject(User owner, string name, string mainLangName)
         {
-            var proj = await _projectsRepository.CreateProject(owner, name);
+            var proj = await _projectsRepository.CreateProject(owner, name, new Lang { Name = mainLangName });
             await _projectsRepository.SaveChanges();
             return ProjectToViewModel(proj);
         }

@@ -12,6 +12,8 @@ namespace Tranlator.Models
         public string Name { get; set; }
         [Required]
         public bool IsPublic { get; set; }
+        [Required]
+        public Lang MainLang { get; set; }
         public List<Lang> Langs { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Tranlator.Services
 {
     public interface IProjectsService
     {
-        public Task<ProjectInfoViewModel> CreateNewProject(User owner, string name);
+        public Task<ProjectInfoViewModel> CreateNewProject(User owner, string name, string mainLangName);
         public Task<List<ProjectInfoViewModel>> UserProjects(int userId);
         public Task<List<LangInfoViewModel>> ProjectLangs(int projectId);
         public Task<List<FileInfoViewModel>> LangFiles(int langId);

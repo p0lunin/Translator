@@ -22,9 +22,9 @@ namespace Tranlator.Repositories
             await _ctx.SaveChangesAsync();
         }
 
-        public async Task<Project> CreateProject(User owner, string name)
+        public async Task<Project> CreateProject(User owner, string name, Lang mainLang)
         {
-            var project = new Project { Owner = owner, Name = name, IsPublic = false };
+            var project = new Project { Owner = owner, Name = name, IsPublic = false, MainLang = mainLang};
             await _ctx.AddAsync(project);
             return project;
         }
@@ -39,7 +39,12 @@ namespace Tranlator.Repositories
             {
                 throw new RecordNotFoundException("user");
             }
-            return await _ctx.Projects.Where(proj => proj.Owner.Id.Equals(userId)).ToListAsync();
+            return 
+                await _ctx
+                    .Projects
+                    .Where(proj => proj.Owner.Id.Equals(userId))
+                    .Include(proj => proj.MainLang)
+                    .ToListAsync();
         }
 
         public async Task<List<Lang>> GetProjectLangs(int projectId)

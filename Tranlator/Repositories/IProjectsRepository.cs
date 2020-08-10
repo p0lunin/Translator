@@ -6,7 +6,7 @@ namespace Tranlator.Repositories
 {
     public interface IProjectsRepository : IRepository
     {
-        public Task<Project> CreateProject(User owner, string name);
+        public Task<Project> CreateProject(User owner, string name, Lang mainLang);
         public Task<List<Project>> GetUserProjects(int userId);
         public Task<List<Lang>> GetProjectLangs(int projectId);
         public Task<List<File>> GetLangFiles(int langId);
